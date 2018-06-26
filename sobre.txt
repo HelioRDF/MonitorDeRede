@@ -1,0 +1,49 @@
+ 
+ ********************************************************************************   
+ ENCODETECH ® Monitor de Rede UPDATE VERSION 5.0 README  
+ ********************************************************************************  
+ Autor/Author: Helio Franca "<heliordf@hotmail.com>" 
+ pt-BR: Este software  foi desenvolvido por Helio Franca.
+ E está licenciado sob os termos da Licença End User License Agreement (EULA),
+ seguindo o modelo de software proprietário, com licença válida para o ano de 2017/2018. 
+ Copyright (C) 2017 - 2018 por/by Helio Franca "<heliordf@hotmail.com>" 
+ 
+ ============= 
+ APRESENTAÇÃO 
+ ============= 
+ 
+ O software Monitor de Rede, é uma solução Web desenvolvida para monitoração de Redes IP. 
+ ******************************************************************************************** 
+ * - Este software testa a conexão de uma Rede IP                                           * 
+ * - Este programa é propriedade da coleção de soluções EncodeTech,                         *
+ *   e não  pode ser redistribuído e/ou modificado nos                                      * 
+ *   termos da da Licença End User License Agreement (EULA).                                * 
+ *                                                                                          * 
+ ******************************************************************************************** 
+ 
+ ====================== 
+ SOBRE ESTA ATUALIZAÇÃO 
+ ====================== 
+ - Opção de definir um intervalo em horas, entre 1h á 100h, a cada teste.
+ - Testes entre sites realizado em paralelo, utilizando conceito MultiThread.
+ - Envio de E-mail automático, com hora agendada.
+ - Envio de E-mail automático, caso ocorra erro de conexão.
+ - Envio de E-mail Manual em paralelo, usando conceito MultiThread.
+ - E-mail formatado em HTML5/CSS.
+ - Resultado dos testes dividido por abas e paginação inteligente na GUI.   
+ 
+ ======================================================= 
+ COMO UTILIZAR  
+ ======================================================= 
+ - Botão slider, define um intevalo em horas entre um teste de conexão e outro (1). 
+ - Botão executar, inicia todos os testes de conexão (2).
+ - Botão parar, interrompe os testes de conexão (3).
+ - Botão Switch on/off e-mail, ativa ou desativa o envio automático de e-mail(4).
+ - Input hora e-mail, determina o horário de envio automático do e-mail (5).
+ - Botão enviar e-mail, inicia em paralelo um novo teste de conexão e envia por e-mail(6).
+      
+ =================== 
+ DÚVIDAS FREQUENTES 
+ =================== 
+ 
+ Helio Franca "<heliordf@hotmail.com>"

@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	
+	
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<h:outputStylesheet library="css" name="estilo.css"></h:outputStylesheet>
+
+	<style type="text/css">
+.animated .ui-progressbar-value { 
+	background-image:
+		url("/showcase/javax.faces.resource/demo/images/pbar-ani.gif.xhtml");
+}
+
+#westForm:j_idt18 {
+	border-radius: 90px;
+}
+</style>
+
+	<script type="text/javascript">
+		function start() {
+			PF('startButton1').disable();
+
+			window['progress'] = setInterval(
+					function() {
+						var pbClient = PF('pbClient'), oldValue = pbClient
+								.getValue(), newValue = oldValue + 10;
+
+						pbClient.setValue(pbClient.getValue() + 8);
+
+						if (newValue === 100) {
+							clearInterval(window['progress']);
+						}
+
+					}, 1000);
+		}
+	</script>
+
+</h:head>
+<h:body>
+
+	<!-- _________________________________________________________________________________________________________________________________ -->
+	<!-- Layout -->
+	<p:layout fullPage="true">
+
+
+
+		<!-- _________________________________________________________________________________________________________________________________ -->
+		<!-- Layout TOP (North) -->
+		<p:layoutUnit position="north" size="auto" resizable="true"
+			style=" font-size:13px;" closable="false" visible="true">
+
+			<div id="menu">
+
+				<p:commandButton value="Sobre" id="sobre"
+					onclick="PF('dlg1').show();" icon="ui-icon-info" />
+
+				<h1>Monitor de Rede</h1>
+				<span id="encode">@Encodetech</span>
+
+			</div>
+
+
+		</p:layoutUnit>
+		<!-- Fim Layout TOP (North) -->
+
+
+		<!-- _________________________________________________________________________________________________________________________________ -->
+		<!-- Layout west (Left) -->
+		<p:layoutUnit position="west" size="375" header="Controle"
+			style="font-size:16px; " collapsed="false" resizable="true"
+			closable="false" collapsible="true" effect="drop" effectSpeed="slow"
+			visible="true">
+
+
+			<p:fieldset id="fd"  styleClass="controle">
+
+				<h:form id="westForm" >
+
+					<!-- Ação Ajax -->
+					<p:ajaxStatus rendered="true" 
+						style="margin:0 0 0 90px;height:0px; ">
+						<f:facet name="default"  >
+							<p:graphicImage styleClass="load" value="/imagens/load7.gif" 
+								rendered="#{controle.testando}" />
+
+						</f:facet>
+
+						<f:facet name="start">
+							<p:graphicImage styleClass="load" value="/imagens/load7.gif" rendered="#{controle.testando}" />
+						</f:facet>
+
+						<f:facet name="complete">
+							<p:graphicImage styleClass="load" value="/imagens/load7.gif"
+								rendered="#{controle.testando}" />
+						</f:facet>
+
+					</p:ajaxStatus>
+					
+					<p:commandButton  id="help" value="?" onclick="PF('dlg3').show();" 
+							style="font-size:12px; position: absolute;  text-align:right; float:right; top:10px; right: 10px; top: 10px;" ></p:commandButton>
+
+					<br></br>
+					<!-- Executar testes -->
+					<p:outputLabel value="Intervalo"
+						style=" margin-left:10px; font-size:18px; font-family: Colibri, Comic Sans;"></p:outputLabel>
+
+					<h:panelGrid columns="3">
+						<p:slider for="hora" style="margin-left:10px; width:145px; border-radius:90px "
+							disabled="#{controle.testando}" />
+						<p:inputText id="hora" value="#{controle.intervalo}"
+							immediate="true" disabled="#{controle.testando}"
+							style="height:15px; width:35px; margin-left:15px; font-size:14px;" />
+						<p:outputLabel style="font-size:14px;">Horas</p:outputLabel>
+					</h:panelGrid>
+
+					<p:commandButton
+						style="color:blue; margin-left:10px; margin-top:10px; font-size:15px;" 
+						disabled="#{controle.testando}" icon="ui-icon-play" 
+						value="Executar" action="#{controle.iniciar}"
+						update=":msg:fr: :westForm:"
+						  />
+
+					<p:commandButton
+						style="color:#933737;  margin-top:10px; font-size:15px; margin-left:15px; "
+						disabled="#{!controle.testando}" icon="ui-icon-stop" value="Parar"
+						action="#{controle.parar}" update=":msg:fr:tableSLG: :westForm:" />
+
+
+					<p:growl></p:growl>
+
+
+					<h:panelGrid columns="1" style="margin-top:15px;">
+
+						<p:outputLabel for="time" value="E-mail agendado"
+							style=" margin-left:10px; font-size:18px; font-family:Colibri, Comic Sans;" />
+						<p:outputLabel></p:outputLabel>
+						<p:inputSwitch value="#{controle.enviarEmail}"
+							disabled="#{controle.testando}"
+							style=" width:35px;margin:auto 0px auto 10px ;   font-size:16px;" />
+
+						<h:panelGrid columns="2">
+							<p:outputLabel for="time" value="Hora de envio:"
+								style="margin-left:10px; font-size:15px; font-family:Colibri, Comic Sans;" />
+							<p:calendar id="time" value="#{controle.horaDeEnvio}"
+								pattern="HH:mm" disabled="#{controle.testando}" timeOnly="true"
+								style="padding-left:10px;text-align:midlle; height:20px; width:10px; font-size:14px; margin:0;" />
+						</h:panelGrid>
+					</h:panelGrid>
+
+
+
+					<p:separator style="margin:20px 0;"></p:separator>
+
+					<!-- Fim Executar testes -->
+
+				</h:form>
+				<h:form id="frmail">
+					<!-- Email  -->
+
+					<p:growl id="growl" />
+					<h:panelGrid columns="1" >
+						<p:commandButton action="#{controle.metodoEmail}"
+							onclick="PF('pbAjax').start();PF('startButton2').disable();"
+							widgetVar="startButton2" icon="ui-icon-mail-closed"
+							value="Enviar e-mail"
+							style="margin:5px 10px 0px 10px; font-size:15px;" />
+
+
+						<p:progressBar widgetVar="pbAjax" ajax="true"  
+							value="#{progressBarView.progress}" labelTemplate="{value}%"
+							style="color:#41da41; width:260px; margin:10px 0px auto 10px;" styleClass="animated" global="false">
+							<p:ajax event="complete" listener="#{progressBarView.onComplete}"
+								update="growl" oncomplete="PF('startButton2').enable()" />
+						</p:progressBar>
+
+
+					</h:panelGrid>
+
+					<p:separator style="margin:20px 0;"></p:separator>
+						
+						<h:panelGrid columns="1"
+						style="font-size:12px; margin:20px 0px 0px 10px; ">
+					
+							<p:clock pattern=" dd.MM.yyyy HH:mm:ss" />
+								<h:outputLabel></h:outputLabel>
+						<h3 style="margin: 2px 0px 0px 5px; font-size: 9px;">Data e
+							Hora do Sistema.</h3>
+							
+							
+	
+					</h:panelGrid>
+				</h:form>
+			</p:fieldset>
+		</p:layoutUnit>
+		<!-- Fim Layout West (Left) -->
+
+		<!-- _________________________________________________________________________________________________________________________________ -->
+		<!-- Layout Center -->
+		<p:layoutUnit position="center">
+
+			<h:form id="msg">
+			<p:poll  interval="9" update=":msg:" />
+
+				<p:tabView id="fr" style="font-size:14px;">
+					<!-- Site São Luís xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+					<p:tab title="São Luís">
+
+						<p:dataTable var="lista" value="#{controle.allSLG}" id="tableSLG" 
+							paginator="true" rows="8" paginatorPosition="top"
+							rowsPerPageTemplate="10,20,30" scrollable="true"
+							emptyMessage="Nenhum Registro encontrado"
+							style=" margin:0px 10px; text-align:center; font-size:13px;  ">
+							
+							
+
+							<p:column width="30px;">
+								<h:graphicImage styleClass="led"
+									value="/imagens/#{lista.status}.png">
+
+								</h:graphicImage>
+
+							</p:column>
+
+							<p:column headerText="Equipamento">
+								<p:outputLabel value="#{lista.equipamento}"></p:outputLabel>
+
+							</p:column>
+							<p:column headerText="IP">
+								<p:outputLabel value="#{lista.ip}"></p:outputLabel>
+
+							</p:column>
+							<p:column headerText="Status">
+								<p:outputLabel rendered="#{lista.status}"
+									value="Comunicação normal"></p:outputLabel>
+								<p:outputLabel rendered="#{!lista.status}" style="color:red;"
+									value="Problemas na Comunicação "></p:outputLabel>
+
+							</p:column>
+
+							<p:column headerText="Config" width="13%">
+								<p:commandButton icon="ui-icon-pencil" title="Editar"
+									onclick="PF('dlg2').show();"></p:commandButton>
+								<p:commandButton icon="ui-icon-trash" title="Excluir"
+									onclick="PF('dlg2').show();"></p:commandButton>
+								<p:commandButton icon="ui-icon-comment" title="Anotações"
+									onclick="PF('dlg2').show();"></p:commandButton>
+							</p:column>
+						</p:dataTable>
+
+						<p:fieldset style="margin:0px 10px; margin-top:3px;  padding:8px;  ">
+							<p:commandButton style="font-size:13px; " styleClass="add"
+								value="Atualizar" update=":msg:" icon=" ui-icon-refresh"></p:commandButton>
+
+							<p:commandButton style="font-size:13px; margin-left:5px; "
+								styleClass="add" value="Incluir" onclick="PF('dlg2').show();"
+								icon="ui-icon-plusthick"></p:commandButton>
+
+							<p:outputLabel
+								style="margin: 20px 0px 0px auto; color:#b49152;font-size: 10px; text-align:right; float:right"
+								value="#{controle.horaSlg}"></p:outputLabel>
+
+						</p:fieldset>
+					</p:tab>
+
+
+					<!-- Site São Joaquim xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+					<p:tab title="São Joaquim">
+
+						<p:dataTable var="lista" value="#{controle.allSJQ}" id="tableSJQ"
+							paginator="true" rows="8" paginatorPosition="top"
+							rowsPerPageTemplate="10,20,30" scrollable="true"
+							emptyMessage="Nenhum Registro encontrado"
+							style="margin:0px 10px; text-align:center; font-size:13px; ">
+							
+							
+
+							<p:column width="30px;">
+								<h:graphicImage styleClass="led"
+									value="/imagens/#{lista.status}.png">
+
+								</h:graphicImage>
+
+
+							</p:column>
+
+							<p:column headerText="Equipamento">
+								<p:outputLabel value="#{lista.equipamento}"></p:outputLabel>
+
+							</p:column>
+							<p:column headerText="IP">
+								<p:outputLabel value="#{lista.ip}"></p:outputLabel>
+
+							</p:column>
+							<p:column headerText="Status">
+								<p:outputLabel rendered="#{lista.status}"
+									value="Comunicação normal"></p:outputLabel>
+								<p:outputLabel rendered="#{!lista.status}" style="color:red;"
+									value="Problemas na Comunicação "></p:outputLabel>
+
+							</p:column>
+
+							<p:column headerText="Config" width="13%">
+								<p:commandButton icon="ui-icon-pencil" title="Editar"
+									onclick="PF('dlg2').show();"></p:commandButton>
+								<p:commandButton icon="ui-icon-trash" title="Excluir"
+									onclick="PF('dlg2').show();"></p:commandButton>
+								<p:commandButton icon="ui-icon-comment" title="Anotações"
+									onclick="PF('dlg2').show();"></p:commandButton>
+							</p:column>
+						</p:dataTable>
+
+						<p:fieldset style="margin:0px 10px; margin-top:3px; padding:8px;">
+
+							<p:commandButton style="font-size:13px;" styleClass="add"
+								value="Atualizar" update=":msg:" icon=" ui-icon-refresh"></p:commandButton>
+
+							<p:commandButton style="font-size:13px; margin-left:5px;"
+								styleClass="add" value="Incluir" onclick="PF('dlg2').show();"
+								icon="ui-icon-plusthick"></p:commandButton>
+
+							<p:outputLabel
+								style="margin: 20px 0px 0px 0px; color:#b49152;font-size: 10px; text-align:center; float:right"
+								value="#{controle.horaSjq}"></p:outputLabel>
+
+						</p:fieldset>
+
+
+					</p:tab>
+
+					<!-- Site Largo da Concordia xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
+					<p:tab title="Largo da Concordia">
+
+
+						<p:dataTable var="lista" value="#{controle.allLDC}" id="tableLDC"
+							paginator="true" rows="8" paginatorPosition="top"
+							rowsPerPageTemplate="10,20,30" scrollable="true"
+							emptyMessage="Nenhum Registro encontrado"
+							style="margin:0px 10px; text-align:center;font-size:13px; ">
+							
+							
+
+							<p:column width="30px;">
+								<h:graphicImage styleClass="led"
+									value="/imagens/#{lista.status}.png">
+
+								</h:graphicImage>
+
+							</p:column>
+
+							<p:column headerText="Equipamento">
+								<p:outputLabel value="#{lista.equipamento}"></p:outputLabel>
+
+							</p:column>
+							<p:column headerText="IP">
+								<p:outputLabel value="#{lista.ip}"></p:outputLabel>
+
+							</p:column>
+							<p:column headerText="Status">
+								<p:outputLabel rendered="#{lista.status}"
+									value="Comunicação normal"></p:outputLabel>
+								<p:outputLabel rendered="#{!lista.status}" style="color:red;"
+									value="Problemas na Comunicação "></p:outputLabel>
+
+							</p:column>
+							<p:column headerText="Config" width="13%">
+								<p:commandButton icon="ui-icon-pencil" title="Editar"
+									onclick="PF('dlg2').show();"></p:commandButton>
+								<p:commandButton icon="ui-icon-trash" title="Excluir"
+									onclick="PF('dlg2').show();"></p:commandButton>
+								<p:commandButton icon="ui-icon-comment" title="Anotações"
+									onclick="PF('dlg2').show();"></p:commandButton>
+							</p:column>
+						</p:dataTable>
+
+						<p:fieldset style="margin:0px 10px; margin-top:3px; padding:8px;  ">
+							<p:commandButton style="font-size:13px;" styleClass="add"
+								value="Atualizar" update=":msg:" icon=" ui-icon-refresh"></p:commandButton>
+
+							<p:commandButton style="font-size:13px;margin-left:5px;"
+								styleClass="add" value="Incluir" onclick="PF('dlg2').show();"
+								icon="ui-icon-plusthick"></p:commandButton>
+
+							<p:outputLabel
+								style="margin: 20px 0px 0px auto; color:#b49152;font-size: 10px; text-align:right; float:right"
+								value="#{controle.horaLdc}"></p:outputLabel>
+						</p:fieldset>
+
+					</p:tab>
+
+				</p:tabView>
+
+
+
+			</h:form>
+
+		</p:layoutUnit>
+		<!-- Fim Layout Center -->
+
+
+		<!-- _________________________________________________________________________________________________________________________________ -->
+		<!-- Layout Bottom (South) -->
+		<p:layoutUnit position="south" size="auto" resizable="true"
+			visible="false" closable="true" collapsible="true">
+
+			<div id="rodape">
+				<h1>Monitor de Rede</h1>
+			</div>
+
+		</p:layoutUnit>
+		<!--Fim Layout Bottom (South) -->
+
+	</p:layout>
+	<!-- Fim do Layout -->
+	<!-- _________________________________________________________________________________________________________________________________ -->
+
+
+	<!-- _________________________________________________________________________________________________________________________________ -->
+	<!-- Dialog Sobre-->
+	<p:dialog header="Sobre" widgetVar="dlg1" resizable="false" id="dl">
+		<h:form id="fr">
+
+			<h:graphicImage value="/imagens/sobre.png"></h:graphicImage>
+
+		</h:form>
+
+	</p:dialog>
+	
+
+
+	<!-- _________________________________________________________________________________________________________________________________ -->
+	<!-- Dialog função-->
+	<p:dialog header="Alerta" widgetVar="dlg2" resizable="false" id="dl2">
+		<h:form id="fr2">
+
+			<p:outputLabel value="Função desativada para versão atual"></p:outputLabel>
+
+		</h:form>
+
+	</p:dialog>
+
+<!-- _________________________________________________________________________________________________________________________________ -->
+	<!-- Dialog Sobre-->
+	<p:dialog header="Ajuda" widgetVar="dlg3" resizable="false" id="dl3">
+		<h:form id="fr3">
+
+			<h:graphicImage value="/imagens/control.png"></h:graphicImage>
+
+		</h:form>
+
+	</p:dialog>
+
+
+
+
+</h:body>
+
+
+</html>

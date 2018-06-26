@@ -1,0 +1,46 @@
+ 
+********************************************************************************  
+ 
+ENCODETECH � Monitor de Rede UPDATE VERSION 3.0 README 
+ 
+********************************************************************************  
+Autor/Author: Helio Franca "<heliordf@hotmail.com>" 
+pt-BR: Este execut�vel  foi desenvolvido por Helio Franca. E est� licenciado sob os termos da Licen�a valida para o ano de 2017/2018. 
+Copyright (C) 2017 - 2018 por/by Helio Franca "<heliordf@hotmail.com>" 
+ 
+============= 
+APRESENTA��O 
+============= 
+ 
+O software Monitor de Rede, � uma solu��o Web desenvolvida para monitora��o de Rede IP. 
+ 
+ 
+******************************************************************************************** 
+* Este software testa a conex�o de uma Rede IP                                         	   * 
+* Este programa n�o � livre e n�o  pode ser redistribu�do e/ou modificado nos        	       * 
+* termos da EncodeTech vers�o 3.0 e desenvolvedor.                                          * 
+*                                                                                          * 
+******************************************************************************************** 
+ 
+====================== 
+SOBRE ESTA ATUALIZA��O 
+====================== 
+
+ - N/A 
+ 
+======================================================= 
+COMO UTILIZAR  
+======================================================= 
+ 
+- N/A 
+
+ 
+=================== 
+D�VIDAS FREQUENTES 
+=================== 
+ 
+Novas atualiza��es estar�o dispon�veis conforme demanda ... 
+Helio Franca "<heliordf@hotmail.com>"
+
+
+
